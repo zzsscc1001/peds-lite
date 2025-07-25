@@ -1,0 +1,243 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --pure-black: #000000;
+    --pure-white: #ffffff;
+    --subtle-gray: rgba(0, 0, 0, 0.06);
+    --micro-gray: rgba(0, 0, 0, 0.03);
+    --hover-gray: rgba(0, 0, 0, 0.9);
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--pure-white);
+    color: var(--pure-black);
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+}
+
+.container {
+    position: relative;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Abstract geometric fragments */
+.geometric-fragments {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.fragment {
+    position: absolute;
+    background: var(--subtle-gray);
+    opacity: 0.08;
+}
+
+.fragment-1 {
+    width: 300px;
+    height: 1px;
+    top: 25%;
+    left: 10%;
+    transform: rotate(-15deg);
+    transform-origin: left center;
+}
+
+.fragment-2 {
+    width: 200px;
+    height: 1px;
+    top: 70%;
+    right: 15%;
+    transform: rotate(25deg);
+    transform-origin: right center;
+}
+
+.fragment-3 {
+    width: 1px;
+    height: 150px;
+    top: 20%;
+    right: 30%;
+    transform: rotate(45deg);
+}
+
+.fragment-4 {
+    width: 120px;
+    height: 120px;
+    border: 1px solid var(--micro-gray);
+    bottom: 20%;
+    left: 20%;
+    border-radius: 0;
+    opacity: 0.05;
+}
+
+/* Main title - the absolute focal point */
+.main-title {
+    font-size: clamp(120px, 15vw, 240px);
+    font-weight: 900;
+    letter-spacing: -0.05em;
+    line-height: 0.8;
+    text-align: center;
+    z-index: 10;
+    position: relative;
+    cursor: default;
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.main-title:hover {
+    transform: scale(1.02);
+    letter-spacing: -0.03em;
+}
+
+/* Navigation - asymmetric positioning */
+.tool-nav {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.tool-link {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: var(--pure-black);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    pointer-events: all;
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    cursor: pointer;
+}
+
+.tool-link:nth-child(1) { /* Analyze */
+    top: 20%;
+    left: 8%;
+}
+
+.tool-link:nth-child(2) { /* Build */
+    top: 35%;
+    right: 12%;
+}
+
+.tool-link:nth-child(3) { /* Optimize */
+    bottom: 35%;
+    left: 12%;
+}
+
+.tool-link:nth-child(4) { /* Transform */
+    bottom: 20%;
+    right: 8%;
+}
+
+.tool-label {
+    transition: all 0.3s ease;
+}
+
+.tool-indicator {
+    width: 8px;
+    height: 1px;
+    background: var(--pure-black);
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.tool-link:hover .tool-label {
+    color: var(--hover-gray);
+    transform: translateX(4px);
+}
+
+.tool-link:hover .tool-indicator {
+    width: 24px;
+    background: var(--hover-gray);
+}
+
+/* Loading overlay */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--pure-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+
+.loading-overlay.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.loading-content {
+    width: 200px;
+    height: 1px;
+    background: var(--micro-gray);
+    position: relative;
+    overflow: hidden;
+}
+
+.loading-bar {
+    width: 0%;
+    height: 100%;
+    background: var(--pure-black);
+    transition: width 1.2s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* Responsive implications */
+@media (max-width: 768px) {
+    .main-title {
+        font-size: clamp(80px, 25vw, 140px);
+    }
+    
+    .tool-link {
+        font-size: 12px;
+    }
+    
+    .tool-link:nth-child(1) { top: 15%; left: 5%; }
+    .tool-link:nth-child(2) { top: 25%; right: 5%; }
+    .tool-link:nth-child(3) { bottom: 25%; left: 5%; }
+    .tool-link:nth-child(4) { bottom: 15%; right: 5%; }
+}
+
+/* Subtle entrance animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.main-title {
+    animation: fadeInUp 1s ease-out 0.8s both;
+}
+
+.tool-link {
+    animation: fadeInUp 0.8s ease-out 1.2s both;
+}
+
+.tool-link:nth-child(2) { animation-delay: 1.3s; }
+.tool-link:nth-child(3) { animation-delay: 1.4s; }
+.tool-link:nth-child(4) { animation-delay: 1.5s; }
